@@ -1,7 +1,7 @@
 :root{
  --bg:#07101f; --panel:#121d31; --panel2:#0e182b; --ink:#f6f5fa; --muted:#adb8cf;
  --line:#65708d; --line-soft:#36425c; --accent:#c291ed; --accent-2:#9d68d8;
- --radius:15px; --content-width:1450px;
+ --radius:15px; --content-width:1920px;
  font-family:'Noto Sans KR',Pretendard,'Malgun Gothic',system-ui,-apple-system, sans-serif;
  color-scheme:dark;
 }
@@ -319,3 +319,61 @@ p{color:var(--muted)}
  .flow-track a:last-child::after{right:50%}
 }
 @media(max-width:400px){.flow-track a{font-size:11px;min-width:78px}}
+
+/* YUNASLAB 2026-11-26: WORKS 하위 작품 전용 갤러리 카드.
+   상위 카테고리, HOME, 작품 상세 화면, 음악 감상실에는 적용하지 않습니다. */
+.work-card.gallery-work-card{
+ background:#0d1729;
+ border-color:#43506c;
+ border-radius:14px;
+}
+.work-card.gallery-work-card figure{
+ aspect-ratio:16/9;
+ background:#111a2a;
+}
+.work-card.gallery-work-card figure::after{
+ content:"";
+ position:absolute;
+ inset:55% 0 0;
+ pointer-events:none;
+ background:linear-gradient(transparent,rgba(3,9,19,.65));
+}
+.work-card.gallery-work-card .gallery-open{
+ position:absolute;top:12px;right:12px;z-index:2;
+ width:35px;height:35px;display:grid;place-items:center;
+ border:1px solid rgba(237,227,252,.78);border-radius:50%;
+ background:rgba(7,16,31,.76);color:#fff;font-size:20px;line-height:1;
+ transition:background .15s,transform .15s;
+}
+.work-card.gallery-work-card .gallery-sequence{
+ position:absolute;right:14px;bottom:11px;z-index:2;
+ color:#fff;font-size:12px;font-weight:750;letter-spacing:.1em;
+ text-shadow:0 1px 5px #000;
+ font-variant-numeric:tabular-nums;
+}
+.work-card.gallery-work-card .body{
+ padding:16px 17px 19px;min-height:102px;align-items:flex-start;
+}
+.work-card.gallery-work-card .body small{
+ color:#c291ed;font-size:11px;letter-spacing:.9px;font-weight:780;
+}
+.work-card.gallery-work-card .body strong{
+ font-size:19px;line-height:1.32;margin:6px 0;
+}
+.work-card.gallery-work-card .body p{
+ font-size:13px;line-height:1.55;color:#b4bed1;
+}
+.work-card.gallery-work-card:hover,.work-card.gallery-work-card:focus-visible{
+ border-color:#bd94eb;
+}
+.work-card.gallery-work-card:hover .gallery-open,
+.work-card.gallery-work-card:focus-visible .gallery-open{
+ background:#63408b;transform:translate(2px,-2px);
+}
+@media(max-width:720px){
+ .work-card.gallery-work-card .body{min-height:0;padding:15px 16px 18px}
+ .work-card.gallery-work-card .body strong{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ .work-card.gallery-work-card .gallery-open{transition:none}
+}
