@@ -1,0 +1,11 @@
+YUNASLAB Modern Black & Charcoal / SUIT / 본문 최대 1550px
+
+GitHub 저장소 최상위 폴더에 아래 3개 파일만 업로드하여 기존 동명 파일을 교체한 다음 Commit changes 하세요.
+- index.html (Noto Sans KR -> SUIT Variable CDN)
+- styles.css (전체 UI 무채색 + 전체 배경 화면 끝까지 + 본문 1550px 중앙 정렬 + WORKS 갤러리 유지)
+- music-room.css (음악 감상실 UI 무채색 + 볼륨 조절 디자인 유지)
+
+app.js, music-room.js, 93곡 음원, 이미지, 영상은 교체하지 않습니다.
+SUIT 폰트는 인터넷 연결을 통해 CDN에서 읽으며, 로드 실패 시 시스템 폰트로 표시됩니다.
+원본 HOME 은하 이미지에는 보라색이 남을 수 있으나 이미지 파일은 변경하지 않았습니다.
+GitHub 배포 후 Ctrl+Shift+R을 눌러 캐시를 갱신하고 PC/모바일에서 확인하세요.
