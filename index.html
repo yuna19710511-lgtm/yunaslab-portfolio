@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="music-room.css">
 </head>
 <body>
   <a class="skip-link" href="#app">본문 바로가기</a>
@@ -20,6 +21,7 @@
         <a href="#/home" data-nav="home">HOME</a>
         <a href="#/about" data-nav="about">ABOUT</a>
         <a href="#/works" data-nav="works">WORKS</a>
+        <a href="#/music" data-nav="music">AI 음악 감상실</a>
         <a href="#/tools" data-nav="tools">TOOLS</a>
       </nav>
       <button id="mobile-menu-button" class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="메뉴 열기">
@@ -27,7 +29,7 @@
       </button>
     </header>
     <nav id="mobile-nav" class="mobile-nav" aria-label="모바일 메뉴" hidden>
-      <a href="#/home">HOME</a><a href="#/about">ABOUT</a><a href="#/works">WORKS</a><a href="#/tools">TOOLS</a>
+      <a href="#/home">HOME</a><a href="#/about">ABOUT</a><a href="#/works">WORKS</a><a href="#/music">AI 음악 감상실</a><a href="#/tools">TOOLS</a>
     </nav>
     <main id="app" tabindex="-1" aria-live="polite"></main>
     <footer class="site-footer"><span>© 2026 YUNASLAB · Sohn Yuna</span><span>AI로 기획하고, 만들고, 연결합니다.</span></footer>
@@ -36,6 +38,7 @@
     <div class="dialog-top"><strong id="dialog-title"></strong><button id="dialog-close" type="button" aria-label="영상 닫기">닫기 ✕</button></div>
     <video id="dialog-video" controls playsinline preload="none"></video>
   </dialog>
+  <script src="music-room.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>

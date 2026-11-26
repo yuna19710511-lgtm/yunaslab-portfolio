@@ -4,32 +4,34 @@
 <link rel="stylesheet" href="manse-2026.css"></head>
 <body>
 <header class="sitehead"><a class="brand" href="../index.html#/works/manse/app">YUNAS<span>LAB</span></a><span>MANSE / FOUR PILLARS</span><a class="return" href="../index.html#/works/manse/app">← 포트폴리오로</a></header>
-<div class="layout"><aside class="sidebar">
+<div class="layout"><div class="hero"><p class="eyebrow">YUNASLAB · 2026 NEW VERSION</p><h1>만세력 <span>五書의 관점</span></h1><p>원국을 바탕으로 대운·세운·월운과 다섯 명리 고전의 주요 관점을 함께 읽는 학습용 분석 도구입니다.</p></div><aside class="sidebar" id="sidebar">
+ <button type="button" class="side-toggle" id="side-toggle" aria-expanded="false" aria-controls="side-body"><span><b>저장한 사람</b><small id="people-count">0명</small></span><i aria-hidden="true"></i></button>
+ <div class="side-body" id="side-body">
  <div class="side-head"><p class="eyebrow">PERSON ARCHIVE</p><h2>저장한 사람</h2><p class="sub">이 브라우저에만 저장 · 다른 사람도 별도 보관</p></div>
  <input type="search" id="person-search" placeholder="이름 검색" aria-label="저장된 사람 검색">
  <div id="people" class="people"><p class="muted">저장된 사람이 없습니다.</p></div>
  <div class="save-buttons"><button id="new-person" class="btn outline">+ 새 사람</button><button id="delete-person" class="btn danger">선택 인물 삭제</button><button id="export-json" class="btn outline">백업 내보내기</button><label class="btn outline upload" for="import-json">백업 불러오기</label><input id="import-json" type="file" accept=".json,application/json" hidden></div>
+ </div>
 </aside><main class="main">
- <div class="hero"><p class="eyebrow">YUNASLAB · 2026 NEW VERSION</p><h1>만세력 <span>五書의 관점</span></h1><p>원국을 바탕으로 대운·세운·월운과 다섯 명리 고전의 주요 관점을 함께 읽는 학습용 분석 도구입니다.</p></div>
  <section class="panel entry"><div class="section-title"><h2>출생 정보</h2><span>양력·음력 / 윤달 / 시각 미상 지원</span></div>
  <form id="birth-form"><div class="input-grid">
- <label>이름<input id="name" value="" maxlength="40" placeholder="이름 또는 별명" required></label>
- <label>성별<select id="gender"><option value="여">여성</option><option value="남">남성</option></select></label>
- <label>달력<select id="calendar"><option value="양력">양력</option><option value="음력">음력</option></select></label>
- <label>출생 연도<input id="year" type="number" min="1901" max="2099" value="1990" required></label>
- <label>월<input id="month" type="number" min="1" max="12" value="1" required></label>
- <label>일<input id="day" type="number" min="1" max="31" value="1" required></label>
- <label id="leap-label" hidden>음력 윤달<select id="is-leap"><option value="no">평달</option><option value="yes">윤달</option></select></label>
- <label>출생 시간<input id="birth-time" type="time" value="12:00"></label>
- <label class="toggle"><input id="time-unknown" type="checkbox"> 출생 시간 모름</label>
+ <label class="f-name">이름<input id="name" value="" maxlength="40" placeholder="이름 또는 별명" required></label>
+ <label class="f-gender">성별<select id="gender"><option value="여">여성</option><option value="남">남성</option></select></label>
+ <label class="f-cal">달력<select id="calendar"><option value="양력">양력</option><option value="음력">음력</option></select></label>
+ <label class="f-year">출생 연도<input id="year" type="number" min="1901" max="2099" value="1990" required></label>
+ <label class="f-month">월<input id="month" type="number" min="1" max="12" value="1" required></label>
+ <label class="f-day">일<input id="day" type="number" min="1" max="31" value="1" required></label>
+ <label id="leap-label" class="f-leap" hidden>음력 윤달<select id="is-leap"><option value="no">평달</option><option value="yes">윤달</option></select></label>
+ <label class="f-time">출생 시간<input id="birth-time" type="time" value="12:00"></label>
+ <div class="f-unknown"><span class="f-cap" aria-hidden="true">시간을 모를 때</span><label class="toggle"><input id="time-unknown" type="checkbox"> 출생 시간 모름</label></div>
  </div><div class="actions"><button type="submit" class="btn primary">만세력 분석하기 →</button><button type="button" id="save-person" class="btn outline">새 인물로 저장</button><button type="button" id="update-person" class="btn outline">선택 인물 업데이트</button></div><p id="status" class="form-msg" role="status" aria-live="polite"></p></form></section>
  <div id="result" hidden>
  <section class="panel"><div class="section-title"><h2>사주 원국 · 四柱八字</h2><span id="date-info"></span></div><div class="four-pillars" id="pillars"></div>
- <div id="ten-gods" class="gods"></div><p class="note">연주·월주는 입춘·절입을 기준으로 계산합니다. 절입 전후 약 1일, 23시 전후, 출생지 태양시 보정에 따라 다른 만세력과 달라질 수 있습니다. 중요한 판단은 정밀 역법으로 교차 검증하세요.</p></section>
+ <p class="note">연주·월주는 입춘·절입을 기준으로 계산합니다. 절입 전후 약 1일, 23시 전후, 출생지 태양시 보정에 따라 다른 만세력과 달라질 수 있습니다. 중요한 판단은 정밀 역법으로 교차 검증하세요.</p></section>
  <section class="panel"><div class="section-title"><h2>오행의 분포</h2><span>겉으로 드러난 천간·지지 중심의 단순 집계</span></div><div class="elements" id="elements"></div><div class="overview" id="overview"></div></section>
  <section class="panel"><div class="section-title"><h2>고전 5서의 해석 관점</h2><span>원문 인용이 아닌 현대어로 정리한 학습용 관점</span></div><div class="classic-grid" id="classics"></div><p class="note">다섯 고전을 완전 자동 해석한 정통 감정이 아닙니다. 각 책에서 중요하게 다루는 관점을 현재 명식에 연결한 참고용 설명입니다. 격국·용신·조후 판단을 자동으로 단정하지 않습니다.</p></section>
  <section class="panel"><div class="section-title"><h2>대운 · 10년 흐름</h2><span id="dae-info"></span></div><div class="cycle-row" id="dae-list"></div><div class="explain" id="dae-detail">대운을 선택하면 이곳에 해설을 표시합니다.</div></section>
  <section class="panel"><div class="section-title"><h2>세운 · 해마다의 흐름</h2><span>연도별 선택</span></div><div class="cycle-row" id="year-list"></div><div class="explain" id="year-detail">연도를 선택하면 이곳에 해설을 표시합니다.</div></section>
  <section class="panel"><div class="section-title"><h2>월운 · 달마다의 흐름</h2><span id="month-year"></span></div><div class="cycle-row" id="month-list"></div><div class="explain" id="month-detail">월을 선택하면 이곳에 해설을 표시합니다.</div></section>
  </div><footer><p>YUNASLAB · AI-assisted classical 명리 학습 도구 · 관습적 해석은 미래를 확정하지 않습니다.</p><p>백업은 직접 내보내야 다른 기기에서 복원할 수 있습니다.</p></footer>
-</main></div><script src="manse-engine.js"></script><script src="manse-ui.js"></script></body></html>
+</main></div><script src="manse-engine.js"></script><script src="manse-ui.js"></script><script src="manse-layout.js"></script></body></html>

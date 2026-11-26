@@ -2,8 +2,8 @@
    All routes work in a static GitHub Pages deployment using URL hashes.
    Suno music slot is intentionally independent for later Claude Code integration. */
 'use strict';
-const IMG='assets/images/';
-const VID='assets/videos/';
+const IMG='images/';
+const VID=''; /* 영상은 저장소 최상위에 있음 (밀레니엄만 videos/) */
 const external={
   hanok:'https://www.youtube.com/@KoreanHanokKitchen',
   cutting:'https://yuna19710511-lgtm.github.io/jaedannote-test/',
@@ -20,8 +20,7 @@ const CAT=[
  {id:'apps',title:'앱·프로그램 제작',tag:'WORKFLOW / APP',text:'직접 개발한 앱·프로그램',image:'cover_apps.webp'},
  {id:'web',title:'홈페이지 제작',tag:'WEBSITE',text:'반응형 웹사이트 기획·제작',image:'cover_web.webp'},
  {id:'manse',title:'만세력',tag:'PROGRAM',text:'사주 분석 프로그램',image:'thumbnail_04_manse.webp'},
- {id:'recipe',title:'요리 앱',tag:'APP',text:'냉장고 털기 AI',image:'thumbnail_05_recipe.webp'},
- {id:'music',title:'AI 음악 프로젝트',tag:'AI MUSIC',text:'음악 감상실 연동 준비',image:'cover_music.webp'}
+ {id:'recipe',title:'요리 앱',tag:'APP',text:'냉장고 털기 AI',image:'thumbnail_05_recipe.webp'}
 ];
 const FILMS=[
  {id:'hanok',title:'KoreanHanokKitchen',tag:'AI COOKING VIDEO',text:'한옥의 분위기와 한국 요리 이야기',image:'thumbnail_01_hanok_edited.webp',target:'works/video/hanok'},
@@ -99,7 +98,7 @@ function navActive(){
  document.querySelectorAll('.mobile-nav a').forEach(a=>a.classList.toggle('active',a.hash===route(seg)));
 }
 function flow(active){
- const items=[['home','01 HOME'],['about','02 ABOUT'],['works','03 WORKS'],['tools','04 TOOLS']];
+ const items=[['home','01 HOME'],['about','02 ABOUT'],['works','03 WORKS'],['music','04 AI 음악 감상실'],['tools','05 TOOLS']];
  return `<aside class="flow-rail" aria-label="Page Flow"><h2>Page Flow</h2><nav class="flow-track" aria-label="페이지 이동">${items.map(([id,title])=>`<a href="${route(id)}" class="${id===active?'active':''}" ${id===active?'aria-current="page"':''}><span class="flow-dot" aria-hidden="true"></span>${title}</a>`).join('')}</nav></aside>`;
 }
 function inStage(body,active='works'){return `<div class="stage-layout"><div class="stage-content">${body}</div>${flow(active)}</div>`}
@@ -116,7 +115,7 @@ function about(){
  ${inStage(`<div class="cap-grid">${CAPABILITIES.map(([title,text],i)=>`<article class="cap-card"><span class="cap-number">0${i+1} / CAPABILITY</span><h3>${esc(title)}</h3><p>${esc(text)}</p></article>`).join('')}</div><div class="about-notes"><div><h3>LEARNING</h3><p>세종사이버대학교 AI 실무활용학과에서 공부하며,<span class="about-break">다양한 프로젝트로 학습 내용을 적용하고 있습니다.</span></p></div><div><h3>BACKGROUND</h3><p>동국대학교 졸업<span class="about-break">새로운 도구를 배워 실제 작업에 활용하는 과정을 이어가고 있습니다.</span></p></div></div>`,'about')}</div>`;
 }
 function works(){
- const tags=[['all','전체'],['video','AI 영상'],['apps','앱·프로그램'],['web','홈페이지'],['manse','만세력'],['recipe','요리 앱'],['music','음악']];
+ const tags=[['all','전체'],['video','AI 영상'],['apps','앱·프로그램'],['web','홈페이지'],['manse','만세력'],['recipe','요리 앱']];
  const chips=`<div class="filter-row" role="group" aria-label="작품 분야 필터">${tags.map(([id,title])=>`<button class="filter-chip ${currentFilter===id?'selected':''}" type="button" data-filter="${id}" aria-pressed="${currentFilter===id}">${esc(title)}</button>`).join('')}</div>`;
  const filtered=currentFilter==='all'?CAT:CAT.filter(x=>x.id===currentFilter);
  return `<div class="page"><header class="stage-heading"><div class="section-overline">03 / WORKS</div><h1>WORKS</h1><p class="lead">작업 분야를 선택하면 해당 분야의 개별 작품을 볼 수 있습니다.</p></header>${inStage(`${chips}<div class="card-grid" id="works-gallery">${filtered.map(x=>card(x,CAT.indexOf(x))).join('')}</div>`,'works')}</div>`;
@@ -130,15 +129,14 @@ function categoryPage(id){
  if(id==='web')body=`<div class="card-grid">${card({title:'SD HAUS',tag:'WEBSITE',text:'실제 제작 홈페이지',image:'sdhaus.webp'},0,'works/web/sdhaus')}</div>`;
  if(id==='manse')body=`<div class="card-grid">${card({title:'만세력',tag:'FOUR PILLARS',text:'사주 분석 프로그램',image:'thumbnail_04_manse.webp'},0,'works/manse/app')}</div>`;
  if(id==='recipe')body=`<div class="card-grid">${card({title:'냉장고 털기 AI',tag:'RECIPE APP',text:'재료에서 레시피를 찾는 웹앱',image:'thumbnail_05_recipe.webp'},0,'works/recipe/app')}</div>`;
- if(id==='music')body=`<section id="music-room-root" data-music-slot="true" class="music-slot">${img('cover_music.webp','검은색 턴테이블 대표 이미지')}<div><div class="section-overline">YUNA'S MUSIC ROOM</div><h2>AI 음악 감상실</h2><p>기존 음악 카테고리와 개별 곡, 원본 썸네일을 연결할 공간입니다. Suno 음원 파일과 실제 음악 플레이어는 이번 HTML 작업에서 제외했으며, 별도 후속 작업으로 연동합니다.</p><span class="status-pending">음원 연동 전 · 기존 폴더 분류 유지 예정</span></div></section>`;
  return `<div class="page">${crumbs}<header class="stage-heading"><div class="section-overline">03 / WORKS · ${esc(c.tag)}</div><h1>${esc(c.title)}</h1><p class="lead">${esc(c.text)}</p></header>${inStage(body)}</div>`;
 }
 function detailVideo(id){
  const base=FILMS.find(x=>x.id===id);if(!base || id==='hanok')return notFound();
  const data={
   xuankong:{desc:'절벽에 매달린 중국 현공사의 독특한 구조와 하중 전달 원리를 AI 영상으로 재구성한 작품입니다.',tag:'AI SHORT FILM',format:'가로형 · 30초 · 한국어 자막·오디오 포함',video:'xuankong.mp4',poster:'xuankong_real.webp',portrait:false},
-  chair:{desc:'안마의자를 중심으로 편안한 휴식의 분위기를 영상으로 구성한 광고 제작 프로젝트입니다.',tag:'AI PROMO FILM',format:'세로형 · 약 45초 · 로고 없는 웹 편집본',video:'chair.mp4',poster:'chair_real.webp',portrait:true},
-  millennium:{desc:'1999년 12월 31일, 새천년의 문턱에서 마주한 또 다른 나의 이야기.',tag:'EXPERIMENTAL FILM',format:'가로형 · 46초 · 원본 영상 및 음성',video:'millennium.mp4',poster:'millennium_actual.webp',portrait:false},
+  chair:{desc:'안마의자를 중심으로 편안한 휴식의 분위기를 영상으로 구성한 광고 제작 프로젝트입니다.',tag:'AI PROMO FILM',format:'세로형 · 약 51초 · 브랜드 엔딩 포함',video:'chair.mp4',poster:'chair_real.webp',portrait:true},
+  millennium:{desc:'1999년 12월 31일, 새천년의 문턱에서 마주한 또 다른 나의 이야기.',tag:'EXPERIMENTAL FILM',format:'가로형 · 46초 · 원본 영상 및 음성',video:'videos/millennium.mp4',poster:'millennium_actual.webp',portrait:false},
   crystal:{desc:'투명한 크리스탈의 질감과 소리를 담은 감각적인 AI ASMR 영상입니다.',tag:'AI ASMR FILM',format:'세로형 · ASMR',video:'crystal.mp4',poster:'crystal_real.webp',portrait:true}
  }[id];if(!data)return notFound();
  const imageAlt=id==='millennium'?'검은 배경의 MILLENNIUM 1999.12.31 23:59 승인 타이틀':base.title+' 실제 영상 화면';
@@ -162,18 +160,19 @@ function appDetail(kind,id){
  const backTitle=kind==='apps'?'앱·프로그램 제작 목록으로 돌아가기':kind==='web'?'홈페이지 제작 목록으로 돌아가기':(kind==='manse'||kind==='recipe')?'WORKS 전체로 돌아가기':'WORKS 전체로 돌아가기';
  if(kind==='apps'){entry=APPS.find(x=>x.id===id);if(!entry)return notFound(); ({title,desc:description,preview,url,tag,status}=entry);}
  if(kind==='web'&&id==='sdhaus'){title='SD HAUS';description='실제 제작한 인테리어 자재 브랜드 홈페이지입니다.';preview='sdhaus.webp';url=external.website;tag='WEBSITE';}
- if(kind==='manse'&&id==='app'){title='만세력';description='2026년 새로 구성한 명리 학습용 만세력입니다. 양력·음력·윤달·출생 시각을 입력하면 사주 원국과 오행·십성·대운·세운·월운을 살펴볼 수 있습니다. 《연해자평》《삼명통회》《적천수》《자평진전》《궁통보감》의 주요 관점을 참고한 해설과 다중 인물 저장 기능을 제공합니다. 절기 경계와 해석은 정밀 검증이 필요한 참고용입니다.';preview='thumbnail_04_manse.webp';url='programs/manse-2026.html';tag='FOUR PILLARS / NEW 2026';}
+ if(kind==='manse'&&id==='app'){title='만세력';description='2026년 새로 구성한 명리 학습용 만세력입니다. 양력·음력·윤달·출생 시각을 입력하면 사주 원국과 오행·십성·대운·세운·월운을 살펴볼 수 있습니다. 《연해자평》《삼명통회》《적천수》《자평진전》《궁통보감》의 주요 관점을 참고한 해설과 다중 인물 저장 기능을 제공합니다. 절기 경계와 해석은 정밀 검증이 필요한 참고용입니다.';preview='thumbnail_04_manse.webp';url='manse-2026.html';tag='FOUR PILLARS / NEW 2026';}
  if(kind==='recipe'&&id==='app'){title='냉장고 털기 AI';description='냉장고에 있는 재료를 바탕으로 가능한 요리를 찾아보는 AI 레시피 앱입니다.';preview='thumbnail_05_recipe.webp';url=external.recipe;tag='RECIPE WEB APP';}
  if(!title)return notFound();
  return `<div class="page detail-page">${back(backPath,backTitle)}<header class="detail-top"><div class="section-overline">03 / WORKS · ${esc(tag)}</div><h1>${esc(title)}</h1></header><div class="app-detail ${kind==='manse'||kind==='recipe'?'equal-panels':''}"><div class="app-preview">${img(preview,title+' 승인된 실제 화면')}</div><div class="app-description"><div class="eyebrow">PROJECT OVERVIEW</div><h2>${esc(title)}</h2><p>${esc(description)}</p>${url?ext(url,kind==='manse'?'새 만세력 실행하기':'실제 서비스 열기'):`<div class="meta-row"><span class="meta-tag">${esc(status||'외부 실행 링크 미제공')}</span></div>`}<p class="small-note">${url?'새 탭에서 실제 사이트 또는 프로그램이 열립니다.':'공개된 실행 주소가 확인되기 전에는 작동하지 않는 링크를 만들지 않습니다.'}</p>${back(backPath,backTitle)}</div></div></div>`;
 }
 function tools(){
- return `<div class="page"><header class="stage-heading"><div class="section-overline">04 / TOOLS</div><h1>TOOLS</h1><p class="lead">작업에 활용하고 배우는 도구들을 분야별로 정리했습니다.</p></header>${inStage(`<div class="tool-groups">${TOOLS.map(([title,...list])=>`<section class="tool-group"><h2>${esc(title)}</h2><div class="tool-tags">${list.map(x=>`<a class="tool-tag" href="${esc(TOOL_URLS[x])}" target="_blank" rel="noopener noreferrer" title="${esc(x)} 공식 사이트 열기">${esc(x)} <span class="tool-out" aria-hidden="true">↗</span></a>`).join('')}</div></section>`).join('')}</div>`,'tools')}</div>`;
+ return `<div class="page"><header class="stage-heading"><div class="section-overline">05 / TOOLS</div><h1>TOOLS</h1><p class="lead">작업에 활용하고 배우는 도구들을 분야별로 정리했습니다.</p></header>${inStage(`<div class="tool-groups">${TOOLS.map(([title,...list])=>`<section class="tool-group"><h2>${esc(title)}</h2><div class="tool-tags">${list.map(x=>`<a class="tool-tag" href="${esc(TOOL_URLS[x])}" target="_blank" rel="noopener noreferrer" title="${esc(x)} 공식 사이트 열기">${esc(x)} <span class="tool-out" aria-hidden="true">↗</span></a>`).join('')}</div></section>`).join('')}</div>`,'tools')}</div>`;
 }
 function notFound(){return `<div class="page detail-page"><h1>페이지를 찾을 수 없습니다.</h1><p>주소를 확인하거나 WORKS 목록으로 이동해 주세요.</p><a href="${route('works')}" class="primary-button">WORKS로 돌아가기 →</a></div>`}
 function render(){
  closeDialog();
  const path=decodeURIComponent(location.hash.replace(/^#\/?/,'')).split('/').filter(Boolean), [head,...tail]=path;
+ if(head==='works'&&tail[0]==='music'){location.replace(route(['music',...tail.slice(1)].join('/')));return;} /* 예전 음악 주소 → 새 주소 */
  let html='';
  if(!head||head==='home')html=home();
  else if(head==='about')html=about();
@@ -182,12 +181,15 @@ function render(){
  else if(head==='works'&&tail[0]==='video'&&tail[1]==='hanok')html=hanok();
  else if(head==='works'&&tail[0]==='video'&&tail.length===2)html=detailVideo(tail[1]);
  else if(head==='works'&&['apps','web','manse','recipe'].includes(tail[0])&&tail.length===2)html=appDetail(tail[0],tail[1]);
+ else if(head==='music'&&tail.length===0&&typeof MusicRoom!=='undefined')html=MusicRoom.page();
+ else if(head==='music'&&tail.length===1&&typeof MusicRoom!=='undefined')html=MusicRoom.category(tail[0]);
  else if(head==='tools')html=tools();
  else html=notFound();
  app.innerHTML=html;navActive();
+ {const fa=app.querySelector('.flow-track a.active');if(fa){const t=fa.parentElement;t.scrollLeft=fa.offsetLeft-(t.clientWidth-fa.offsetWidth)/2;}} /* 모바일 가로 Page Flow: 현재 위치를 가운데로 */
  menu.hidden=true;menuButton.setAttribute('aria-expanded','false');menuButton.setAttribute('aria-label','메뉴 열기');
  if(window.scrollY>0)window.scrollTo({top:0,behavior:'instant'});
- document.title='YUNASLAB | '+(head==='works'?'WORKS':head==='about'?'ABOUT':head==='tools'?'TOOLS':'HOME');
+ document.title='YUNASLAB | '+(head==='works'?'WORKS':head==='music'?'AI 음악 감상실':head==='about'?'ABOUT':head==='tools'?'TOOLS':'HOME');
 }
 function closeDialog(){
  if(!dialog)return;

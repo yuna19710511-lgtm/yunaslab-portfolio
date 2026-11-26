@@ -268,7 +268,7 @@ p{color:var(--muted)}
 .home-hero-copy{isolation:isolate;overflow:hidden}
 .home-hero-copy::before{
  content:"";position:absolute;right:-12px;top:8px;width:min(69%,770px);height:94%;
- background:url('assets/images/home-galaxy-approved.png') center right/contain no-repeat;
+ background:url('images/home-galaxy-approved.png') center right/contain no-repeat;
  opacity:.92;pointer-events:none;z-index:-1;
 }
 .home-hero-copy > *{position:relative;z-index:1}
@@ -306,3 +306,16 @@ p{color:var(--muted)}
  .app-detail.equal-panels .app-preview{aspect-ratio:16/9}
  .app-detail.equal-panels .app-preview img{height:100%;width:100%;max-height:none;object-fit:contain}
 }
+
+/* 2026-11-26 상단 메뉴 'AI 음악 감상실' 추가에 따른 Page Flow 5단계 — 모바일(720px 이하)만 한 줄 가로 스크롤.
+   PC·태블릿의 세로형 Page Flow는 기존 규칙 그대로입니다. */
+@media(max-width:720px){
+ .flow-track{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;gap:0;padding:13px 0 6px;scroll-snap-type:x proximity}
+ .flow-track::-webkit-scrollbar{display:none}
+ .flow-track::before{display:none}
+ .flow-track a{flex:0 0 auto;min-width:84px;padding:0 10px;white-space:nowrap;scroll-snap-align:center}
+ .flow-track a::after{content:"";position:absolute;top:8px;left:0;right:0;height:1px;background:#aab3c9;z-index:-1}
+ .flow-track a:first-child::after{left:50%}
+ .flow-track a:last-child::after{right:50%}
+}
+@media(max-width:400px){.flow-track a{font-size:11px;min-width:78px}}

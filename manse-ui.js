@@ -64,9 +64,7 @@ function renderResults(c){
  current=c;const {person,solar,pillars:p}=c;
  $('date-info').textContent=`${solar.y}.${String(solar.m).padStart(2,'0')}.${String(solar.d).padStart(2,'0')} 양력 · ${person.unknown?'시간 미상':person.clock+' (KST)'}`;
  const slots=[['시주',person.unknown?null:p.hour],['일주',p.day],['월주',p.month],['연주',p.year]];
- $('pillars').innerHTML=slots.map(([label,x])=>`<article class="pillar ${x?'':'unknown'}"><header>${label}</header><div class="hanja stem">${x?x.stem:'?'}</div><div class="hanja branch">${x?x.branch:'?'}</div><footer>${x?pairKo(x):'시각 미상'}</footer></article>`).join('');
- const godSet=[['연간',p.year.stem],['월간',p.month.stem],['일간',p.day.stem]];if(!person.unknown)godSet.unshift(['시간',p.hour.stem]);
- $('ten-gods').textContent='십성(일간 기준): '+godSet.map(([lab,stem])=>lab==='일간'?`${lab} = 나 자신`:`${lab} ${tenGod(p.day.stem,stem)}`).join(' · ');
+ $('pillars').innerHTML=slots.map(([label,x])=>`<article class="pillar ${x?'':'unknown'}"><header>${label}</header><div class="god${label==='일주'?' self':''}">${label==='일주'?'일간 · 나':x?tenGod(p.day.stem,x.stem):'—'}</div><div class="hanja stem">${x?x.stem:'?'}</div><div class="hanja branch">${x?x.branch:'?'}</div><footer>${x?pairKo(x):'시각 미상'}</footer></article>`).join('');
  $('elements').innerHTML=['木','火','土','金','水'].map(el=>`<article class="element"><b>${el}</b><span>${EL_NAMES[el]} ${c.element[el]}</span><div class="bar"><div class="fill" style="width:${c.element[el]/(person.unknown?6:8)*100}%"></div></div><small>${EL_THOUGHT[el]}</small></article>`).join('');
  $('overview').textContent=elementsSentence(c);
  $('classics').innerHTML=classicsView(c).map(([title,subtitle,description])=>`<article class="classic-card"><h3>《${title}》</h3><small>${subtitle}</small><p>${htm(description)}</p></article>`).join('');
