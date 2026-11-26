@@ -140,7 +140,7 @@ const MusicRoom={
    if(!c.ready)return `<div class="mr-cat is-pending" aria-disabled="true"><div class="mr-cat-visual"><span class="number">${n}</span><span class="mr-soon">준비 중</span></div><div class="mr-cat-body"><strong>${esc(c.name)}</strong><small>순서대로 공개 예정</small></div></div>`;
    return `<a class="mr-cat" href="${route('music/'+c.id)}" aria-label="${esc(c.name)} 카테고리 듣기"><div class="mr-cat-visual"><img src="${mFile(c.id,'cover','webp')}" alt="${esc(c.name)} 플레이리스트 대표 썸네일" loading="lazy"><span class="number">${n}</span></div><div class="mr-cat-body"><strong>${esc(c.name)}</strong><small>${c.tracks.length}곡 · ${mTotal(c)}분</small></div><span class="round-arrow" aria-hidden="true">→</span></a>`;
   }).join('');
-  return `<section id="music-room-root" class="music-slot mr-intro">${img('cover_music.webp','검은색 턴테이블 대표 이미지')}<div><h2>YUNA'S MUSIC ROOM</h2><p>Suno로 직접 기획하고 제작한 음악을 주제별로 모았습니다. 각 곡은 유튜브 플레이리스트에 쓰인 원본 제목과 썸네일 그대로입니다. 카테고리를 고르고 곡을 눌러 감상해 보세요.</p><span class="mr-credit">${esc(MUSIC_CREDIT)}</span></div></section>
+  return `<section id="music-room-root" class="music-slot mr-intro">${img('cover_music.webp','검은색 턴테이블 대표 이미지')}<div><h2>YUNA'S MUSIC ROOM</h2><p><span style="display:block">Suno로 직접 기획하고 제작한 음악을 주제별로 모았습니다.</span><span style="display:block">각 곡은 유튜브 플레이리스트에 쓰인 원본 제목과 썸네일 그대로입니다.</span><span style="display:block">카테고리를 고르고 곡을 눌러 감상해 보세요.</span></p><span class="mr-credit">${esc(MUSIC_CREDIT)}</span></div></section>
   <h2 class="mr-section-title">주제별 카테고리</h2><div class="mr-cat-grid">${cards}</div>`;
  },
  /* #/music — 감상실 메인 페이지 (상단 메뉴에서 바로 진입) */
@@ -153,7 +153,7 @@ const MusicRoom={
   if(!c||!c.ready)return notFound();
   const list=c.tracks.map(([no,ko,en,dur])=>`<button type="button" class="mr-track" data-mr-cat="${c.id}" data-mr-no="${no}" aria-label="${no}번 ${esc(ko)} 재생"><div class="mr-track-visual"><img src="${mFile(c.id,no,'webp')}" alt="${esc(ko)} 원본 썸네일" loading="lazy"><span class="mr-play" aria-hidden="true"><i class="mr-icon-play"></i></span><span class="mr-now">재생 중</span></div><div class="mr-track-body"><span class="mr-no">${String(no).padStart(2,'0')}</span><span class="mr-names"><strong>${esc(ko)}</strong>${en?`<small>${esc(en)}</small>`:''}</span><span class="mr-dur">${mTime(dur)}</span></div></button>`).join('');
   const body=`<div class="mr-hero"><img src="${mFile(c.id,'cover','webp')}" alt="${esc(c.name)} 플레이리스트 대표 썸네일"><div class="mr-hero-copy"><div class="section-overline">${esc(c.en||'PLAYLIST')}</div><p>${esc(c.desc||'')}</p><div class="meta-row"><span class="meta-tag">${c.tracks.length}곡 · 약 ${mTotal(c)}분</span><span class="meta-tag">Suno · AI 음악</span></div><button type="button" class="primary-button mr-playall" data-mr-cat="${c.id}" data-mr-no="${c.tracks[0][0]}">▶ 처음부터 전체 재생</button></div></div>
-   <div class="mr-track-grid${c.playTop?' mr-play-top':''}${c.playLeft?' mr-play-left':''}${c.nowRight?' mr-now-right':''}">${list}</div><p class="mr-credit mr-credit-foot">${esc(MUSIC_CREDIT)} · ${esc(c.note||'모든 곡의 제목과 썸네일은 원본 그대로 사용했습니다.')}</p>`;
+   <div class="mr-track-grid${c.playTop?' mr-play-top':''}${c.playLeft?' mr-play-left':''}${c.nowRight?' mr-now-right':''}">${list}</div><p class="mr-credit mr-credit-foot">${esc(MUSIC_CREDIT)}</p>`;
   return `<div class="page">${back('music','음악 감상실로 돌아가기')}<header class="stage-heading"><div class="section-overline">04 / AI 음악 감상실</div><h1>${esc(c.name)}</h1></header>${inStage(body,'music')}</div>`;
  }
 };
