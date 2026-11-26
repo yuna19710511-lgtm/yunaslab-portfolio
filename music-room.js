@@ -168,10 +168,14 @@ const MusicPlayer=(()=>{
   bar.innerHTML=`<div class="mr-player-inner"><img class="mr-p-thumb" alt=""><div class="mr-p-info"><strong class="mr-p-title"></strong><small class="mr-p-sub"></small></div>
    <div class="mr-p-controls"><button type="button" class="mr-p-btn" data-act="prev" aria-label="이전 곡">⏮</button><button type="button" class="mr-p-btn mr-p-main" data-act="toggle" aria-label="재생"><i class="mr-icon-play"></i></button><button type="button" class="mr-p-btn" data-act="next" aria-label="다음 곡">⏭</button></div>
    <div class="mr-p-seek"><span class="mr-p-cur">0:00</span><input type="range" min="0" max="1000" value="0" aria-label="재생 위치"><span class="mr-p-dur">0:00</span></div>
+   <div class="mr-p-volume"><span aria-hidden="true">🔊</span><input type="range" min="0" max="100" value="100" step="1" aria-label="음악 볼륨 조절"><output aria-live="off">100%</output></div>
    <button type="button" class="mr-p-btn mr-p-close" data-act="close" aria-label="플레이어 닫기">✕</button></div>`;
   document.body.appendChild(bar);
   bar.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;({prev:()=>step(-1),next:()=>step(1),toggle,close})[b.dataset.act]()});
-  const seek=$('input');
+  const seek=$('.mr-p-seek input');
+  const volume=$('.mr-p-volume input');
+  const volumeLabel=$('.mr-p-volume output');
+  volume.addEventListener('input',()=>{audio.volume=Number(volume.value)/100;volumeLabel.textContent=volume.value+'%'});
   seek.addEventListener('input',()=>{if(audio.duration)audio.currentTime=seek.value/1000*audio.duration});
   audio.addEventListener('timeupdate',()=>{if(audio.duration){seek.value=audio.currentTime/audio.duration*1000;$('.mr-p-cur').textContent=mTime(audio.currentTime)}});
   audio.addEventListener('loadedmetadata',()=>{$('.mr-p-dur').textContent=mTime(audio.duration)});
@@ -189,7 +193,7 @@ const MusicPlayer=(()=>{
   $('.mr-p-thumb').src=mFile(c.id,no,'webp');
   $('.mr-p-title').textContent=`${String(no).padStart(2,'0')}. ${ko}`;
   $('.mr-p-sub').textContent=(en?en+' · ':'')+c.name;
-  $('input').value=0;$('.mr-p-cur').textContent='0:00';$('.mr-p-dur').textContent=mTime(c.tracks[i][3]);
+  $('.mr-p-seek input').value=0;$('.mr-p-cur').textContent='0:00';$('.mr-p-dur').textContent=mTime(c.tracks[i][3]);
   bar.hidden=false;document.body.classList.add('mr-player-open');
   if('mediaSession' in navigator)navigator.mediaSession.metadata=new MediaMetadata({title:ko,artist:'Sohn Yuna (Suno)',album:c.name,artwork:[{src:mFile(c.id,no,'webp'),type:'image/webp'}]});
   if(autoplay)audio.play().catch(sync);
