@@ -27,7 +27,8 @@ const FILMS=[
  {id:'xuankong',title:'현공사',tag:'AI SHORT FILM',text:'절벽 위 사찰의 건축 구조를 다룬 AI 영상',image:'xuankong_real.webp',target:'works/video/xuankong'},
  {id:'chair',title:'안마의자 홍보영상',tag:'PROMOTIONAL VIDEO',text:'AI 영상 제작 광고 프로젝트',image:'chair_real.webp',target:'works/video/chair'},
  {id:'millennium',title:'밀레니엄 — 또 다른 나',tag:'EXPERIMENTAL FILM',text:'1999.12.31 23:59',image:'millennium_actual.webp',target:'works/video/millennium'},
- {id:'crystal',title:'CRYSTAL BITE ASMR',tag:'ASMR VIDEO',text:'크리스탈의 질감과 소리를 담은 영상',image:'crystal_original.webp',target:'works/video/crystal'}
+ {id:'crystal',title:'CRYSTAL BITE ASMR',tag:'ASMR VIDEO',text:'크리스탈의 질감과 소리를 담은 영상',image:'crystal_original.webp',target:'works/video/crystal'},
+ {id:'beyond',title:'BEYOND THE SCREEN',tag:'AI MOVIE TRAILER',text:'현실과 스크린 속 세계의 경계를 넘나드는 영화 예고편',image:'beyond-the-screen.webp',target:'works/video/beyond'}
 ];
 const APPS=[
  {id:'cutting',title:'AI 재단노트',tag:'CUTTING / WORKFLOW',text:'재단 계획을 정리하는 작업용 도구',image:'thumbnail_02_cutting_original.webp',preview:'cutting.webp',desc:'판재 규격과 재단 조건을 반영해 계획을 정리하는 프로젝트입니다.',url:external.cutting},
@@ -106,6 +107,12 @@ function card(item,i,path,extraClass=''){
  const title=item.title,href=route(path||(item.id==='manse'?'works/manse/app':item.id==='recipe'?'works/recipe/app':'works/'+item.id));
  return `<a class="work-card ${extraClass}" href="${href}" aria-label="${esc(title)} 보기"><figure>${img(item.image,title+' 대표 이미지')}<span class="number">${String(i+1).padStart(2,'0')}</span></figure><div class="body"><div><small>${esc(item.tag||'PROJECT')}</small><strong>${esc(title)}</strong><p>${esc(item.text||'')}</p></div><span class="round-arrow" aria-hidden="true">→</span></div></a>`;
 }
+/* WORKS 하위 작품 갤러리: 상위 카테고리 및 HOME 공통 카드는 변경하지 않습니다. */
+function galleryCard(item,i,path,total){
+ const title=item.title,href=route(path),n=String(i+1).padStart(2,'0');
+ const sequence=total>1?`${n} / ${String(total).padStart(2,'0')}`:`PROJECT ${n}`;
+ return `<a class="work-card gallery-work-card" href="${href}" aria-label="${esc(title)} 작품 보기"><figure>${img(item.image,title+' 대표 이미지')}<span class="gallery-open" aria-hidden="true">↗</span><span class="gallery-sequence" aria-hidden="true">${sequence}</span></figure><div class="body"><div><small>${esc(item.tag||'PROJECT')}</small><strong>${esc(title)}</strong><p>${esc(item.text||'')}</p></div></div></a>`;
+}
 function home(){
  const main=`<section class="home-featured"><div class="home-hero-copy"><div class="eyebrow">YUNASLAB · CREATIVE PORTFOLIO / 2026</div><h1>AI로 기획하고,<br>만들고, <em>연결합니다.</em></h1><p>아이디어를 실제 콘텐츠와 서비스로 옮기는 작업들을 모았습니다.</p><div class="home-actions"><a href="${route('works')}" class="primary-button">WORKS 살펴보기 →</a><a href="${route('about')}" class="secondary-button">ABOUT 보기</a></div></div><div class="section-head"><h2>FEATURED WORKS</h2><a class="text-link" href="${route('works')}">전체 작품 보기 →</a></div><div class="card-grid home-cards">${[CAT[0],CAT[1]].map((item,i)=>card(item,i,'works/'+item.id)).join('')}<a href="${route('works')}" class="work-card more-card" aria-label="전체 작품 더보기"><div class="more-icon" aria-hidden="true">▷</div><strong>MORE</strong><span>더 많은 작업 보기 →</span></a></div></section>`;
  return `<div class="page home-page">${inStage(main,'home').replace('class="stage-layout"','class="stage-layout home-stage"')}</div>`;
@@ -124,11 +131,11 @@ function categoryPage(id){
  const c=CAT.find(x=>x.id===id);if(!c)return notFound();
  const crumbs=back('works','WORKS 전체로 돌아가기');
  let body='';
- if(id==='video')body=`<div class="card-grid">${FILMS.map((item,i)=>card(item,i,item.target)).join('')}</div>`;
- if(id==='apps')body=`<div class="card-grid">${APPS.map((item,i)=>card(item,i,'works/apps/'+item.id)).join('')}</div>`;
- if(id==='web')body=`<div class="card-grid">${card({title:'SD HAUS',tag:'WEBSITE',text:'실제 제작 홈페이지',image:'sdhaus.webp'},0,'works/web/sdhaus')}</div>`;
- if(id==='manse')body=`<div class="card-grid">${card({title:'만세력',tag:'FOUR PILLARS',text:'사주 분석 프로그램',image:'thumbnail_04_manse.webp'},0,'works/manse/app')}</div>`;
- if(id==='recipe')body=`<div class="card-grid">${card({title:'냉장고 털기 AI',tag:'RECIPE APP',text:'재료에서 레시피를 찾는 웹앱',image:'thumbnail_05_recipe.webp'},0,'works/recipe/app')}</div>`;
+ if(id==='video')body=`<div class="card-grid gallery-grid">${FILMS.map((item,i)=>galleryCard(item,i,item.target,FILMS.length)).join('')}</div>`;
+ if(id==='apps')body=`<div class="card-grid gallery-grid">${APPS.map((item,i)=>galleryCard(item,i,'works/apps/'+item.id,APPS.length)).join('')}</div>`;
+ if(id==='web')body=`<div class="card-grid gallery-grid">${galleryCard({title:'SD HAUS',tag:'WEBSITE',text:'실제 제작 홈페이지',image:'sdhaus.webp'},0,'works/web/sdhaus',1)}</div>`;
+ if(id==='manse')body=`<div class="card-grid gallery-grid">${galleryCard({title:'만세력',tag:'FOUR PILLARS',text:'사주 분석 프로그램',image:'thumbnail_04_manse.webp'},0,'works/manse/app',1)}</div>`;
+ if(id==='recipe')body=`<div class="card-grid gallery-grid">${galleryCard({title:'냉장고 털기 AI',tag:'RECIPE APP',text:'재료에서 레시피를 찾는 웹앱',image:'thumbnail_05_recipe.webp'},0,'works/recipe/app',1)}</div>`;
  return `<div class="page">${crumbs}<header class="stage-heading"><div class="section-overline">03 / WORKS · ${esc(c.tag)}</div><h1>${esc(c.title)}</h1><p class="lead">${esc(c.text)}</p></header>${inStage(body)}</div>`;
 }
 function detailVideo(id){
@@ -137,7 +144,8 @@ function detailVideo(id){
   xuankong:{desc:'절벽에 매달린 중국 현공사의 독특한 구조와 하중 전달 원리를 AI 영상으로 재구성한 작품입니다.',tag:'AI SHORT FILM',format:'가로형 · 30초 · 한국어 자막·오디오 포함',video:'xuankong.mp4',poster:'xuankong_real.webp',portrait:false},
   chair:{desc:'안마의자를 중심으로 편안한 휴식의 분위기를 영상으로 구성한 광고 제작 프로젝트입니다.',tag:'AI PROMO FILM',format:'세로형 · 약 51초 · 브랜드 엔딩 포함',video:'chair.mp4',poster:'chair_real.webp',portrait:true},
   millennium:{desc:'1999년 12월 31일, 새천년의 문턱에서 마주한 또 다른 나의 이야기.',tag:'EXPERIMENTAL FILM',format:'가로형 · 46초 · 원본 영상 및 음성',video:'videos/millennium.mp4',poster:'millennium_actual.webp',portrait:false},
-  crystal:{desc:'투명한 크리스탈의 질감과 소리를 담은 감각적인 AI ASMR 영상입니다.',tag:'AI ASMR FILM',format:'세로형 · ASMR',video:'crystal.mp4',poster:'crystal_real.webp',portrait:true}
+  crystal:{desc:'투명한 크리스탈의 질감과 소리를 담은 감각적인 AI ASMR 영상입니다.',tag:'AI ASMR FILM',format:'세로형 · ASMR',video:'crystal.mp4',poster:'crystal_real.webp',portrait:true},
+  beyond:{desc:'한 여성이 오래된 극장에서 스크린 너머의 세계와 마주하며 현실과 환상의 경계가 무너지는 이야기를 담은 AI 영화 예고편입니다.',tag:'AI MOVIE TRAILER',format:'가로형 · 약 22초 · 음악 포함',video:'beyond-the-screen.mp4',poster:'beyond-the-screen.webp',portrait:false}
  }[id];if(!data)return notFound();
  const imageAlt=id==='millennium'?'검은 배경의 MILLENNIUM 1999.12.31 23:59 승인 타이틀':base.title+' 실제 영상 화면';
  const media=data.video?`<div class="watch-player ${data.portrait?'portrait-player':'wide-player'}"><video src="${VID+data.video}" poster="${IMG+data.poster}" controls preload="metadata" playsinline aria-label="${esc(base.title)} 영상 재생">브라우저가 HTML5 비디오를 지원하지 않습니다.</video></div>`:`<div class="video-missing">${img(data.poster,imageAlt)}<span>확정된 타이틀 이미지입니다. 밀레니엄 완성 MP4는 현재 이 제작본에 포함되지 않아 재생 연결을 대기하고 있습니다.</span></div>`;

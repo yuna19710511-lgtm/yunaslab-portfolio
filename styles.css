@@ -411,3 +411,49 @@ html,body{background:#0D0E10;}
 .home-hero-copy{background:radial-gradient(ellipse at 93% 5%,rgba(145,145,145,.08),transparent 45%);}
 /* Give working desktop controls breathing room without changing columns or media breakpoints. */
 @media(min-width:981px){.site-header,.site-footer{padding-left:clamp(32px,4vw,70px);padding-right:clamp(32px,4vw,70px);}}
+
+
+/* YUNASLAB v2 — WORKS project galleries visually distinct from category cards.
+   Only the nested project listing is targeted; HOME and top-level WORKS are unchanged. */
+@media(min-width:721px){
+ .stage-content .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 24px;}
+}
+.stage-content .gallery-grid .gallery-work-card{
+ background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible;
+ transform:none;
+}
+.stage-content .gallery-grid .gallery-work-card figure{
+ border-radius:9px;overflow:hidden;border:1px solid #484b50;
+ aspect-ratio:16/9;background:#181a1e;
+}
+.stage-content .gallery-grid .gallery-work-card figure img{
+ object-fit:contain;background:#181a1e;
+}
+.stage-content .gallery-grid .gallery-work-card .body{
+ padding:13px 2px 14px;min-height:0;border-bottom:1px solid #43464b;
+}
+.stage-content .gallery-grid .gallery-work-card .body strong{font-size:20px;margin:5px 0;}
+.stage-content .gallery-grid .gallery-work-card .gallery-sequence{background:#101114b8;padding:3px 7px;border-radius:3px;}
+.stage-content .gallery-grid .gallery-work-card:hover figure,
+.stage-content .gallery-grid .gallery-work-card:focus-visible figure{border-color:#cfd1d4;}
+@media(max-width:720px){
+ .stage-content .gallery-grid{grid-template-columns:1fr;gap:23px;}
+}
+
+/* KoreanHanokKitchen: keep entire original image visible, avoid giant tall crops.
+   Limit changes to the cooking gallery, not original videos or other card artwork. */
+#hanok-gallery .hanok-grid{gap:18px;}
+#hanok-gallery .food-card .food-visual{
+ height:auto;aspect-ratio:16/10;max-height:none;background:#17191d;
+}
+#hanok-gallery .food-card .food-visual img{
+ display:block;width:100%;height:100%;position:absolute;inset:0;
+ object-fit:contain;object-position:center;
+}
+#hanok-gallery .food-card .food-title{font-size:15px;padding:11px 13px;}
+#hanok-gallery .food-card .food-title small{font-size:11px;white-space:nowrap;}
+#hanok-gallery .hanok-banner img{object-fit:contain;height:auto;aspect-ratio:auto;}
+@media(max-width:720px){
+ #hanok-gallery .food-card .food-visual{aspect-ratio:16/10;}
+ #hanok-gallery .hanok-banner img{height:auto;object-fit:contain;}
+}
