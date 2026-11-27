@@ -457,3 +457,99 @@ html,body{background:#0D0E10;}
  #hanok-gallery .food-card .food-visual{aspect-ratio:16/10;}
  #hanok-gallery .hanok-banner img{height:auto;object-fit:contain;}
 }
+
+
+/* 2026-11-27 — WORKS detail and gallery finishing pass. No changes to MUSIC UI. */
+/* Top-level category cards stay as category cards. Nested work galleries are art-first, borderless. */
+.stage-content .gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 25px;align-items:start;}
+.stage-content .gallery-grid .gallery-work-card{
+ display:block;background:transparent;border:none!important;border-radius:0;box-shadow:none;
+ overflow:visible;transform:none;min-height:0;
+}
+.stage-content .gallery-grid .gallery-work-card figure{
+ display:block;aspect-ratio:16/9;overflow:hidden;border-radius:5px;
+ border:1px solid #3c4046;background:#17191b;transition:border-color .2s ease;
+}
+.stage-content .gallery-grid .gallery-work-card figure img{
+ display:block;width:100%;height:100%;object-fit:contain;object-position:center;
+}
+.stage-content .gallery-grid .gallery-work-card figure::after{display:none;}
+.stage-content .gallery-grid .gallery-work-card .gallery-sequence,
+.stage-content .gallery-grid .gallery-work-card .number{display:none!important;}
+.stage-content .gallery-grid .gallery-work-card .gallery-open{
+ top:14px;right:14px;width:36px;height:36px;background:#111b;
+ border:1px solid #dedede;border-radius:3px;font-size:20px;
+}
+.stage-content .gallery-grid .gallery-work-card .body{
+ padding:15px 0 16px;min-height:0;border-bottom:1px solid #41454a;
+ background:transparent;display:block;
+}
+.stage-content .gallery-grid .gallery-work-card .body small{
+ font-size:11px;letter-spacing:1.1px;color:#abb0b7;font-weight:650;
+}
+.stage-content .gallery-grid .gallery-work-card .body strong{
+ font-size:21px;font-weight:710;margin:4px 0 5px;
+}
+.stage-content .gallery-grid .gallery-work-card .body p{font-size:13px;line-height:1.6;}
+.stage-content .gallery-grid .gallery-work-card:hover figure{border-color:#eee;}
+/* KoreanHanokKitchen gallery is for 9:16 shorts, not landscape stills. */
+#hanok-gallery .hanok-grid{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 16px;
+}
+#hanok-gallery .food-card{background:transparent;border-color:#43474d;border-radius:8px;}
+#hanok-gallery .food-card .food-visual{
+ position:relative;width:100%;height:auto;max-height:none;aspect-ratio:9/16;
+ overflow:hidden;background:#17191d;
+}
+#hanok-gallery .food-card .food-visual img{
+ position:absolute;inset:0;display:block;width:100%;height:100%;
+ object-fit:contain;object-position:center;
+}
+#hanok-gallery .food-card .food-title{font-size:14px;padding:11px 10px;}
+#hanok-gallery .food-card .food-title small{font-size:10px;flex-shrink:0;}
+/* Align ALL standalone video detail pages to the same left edge as the heading. */
+.page.detail-page{width:100%;max-width:1200px;margin-left:auto;margin-right:auto;}
+.page.detail-page .detail-top{margin-bottom:23px;}
+.page.detail-page .watch-surface.wide{
+ width:min(100%,1050px);max-width:none;margin-left:0;margin-right:auto;
+}
+.page.detail-page .watch-surface.wide .watch-player,
+.page.detail-page .watch-surface.wide .video-missing{
+ max-width:none;margin-left:0;margin-right:0;
+}
+/* For vertical film, prevent a giant empty dark panel on the right. */
+.page.detail-page .watch-surface.portrait-layout{
+ width:min(100%,1010px);margin-left:0;margin-right:auto;
+ grid-template-columns:minmax(0,365px) minmax(0,1fr);
+ gap:clamp(25px,4vw,55px);align-items:center;
+}
+.page.detail-page .watch-surface.portrait-layout .watch-player.portrait-player{
+ max-width:365px;width:100%;margin-left:0;
+}
+.page.detail-page .watch-surface.portrait-layout .detail-copy{max-width:510px;min-width:0;}
+@media(min-width:721px){
+ .page.detail-page.project-crystal .watch-surface.portrait-layout,
+ .page.detail-page.project-chair .watch-surface.portrait-layout{
+   grid-template-columns:minmax(0,365px) minmax(0,1fr);
+ }
+ .page.detail-page.project-crystal .watch-player.portrait-player{max-width:365px;}
+}
+@media(max-width:1100px) and (min-width:721px){
+ #hanok-gallery .hanok-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:720px){
+ .stage-content .gallery-grid{grid-template-columns:1fr;gap:25px;}
+ #hanok-gallery .hanok-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+ .page.detail-page .watch-surface.portrait-layout{
+   width:100%;grid-template-columns:1fr;
+ }
+ .page.detail-page .watch-surface.portrait-layout .watch-player.portrait-player{
+   margin:0 auto;max-width:min(100%,365px);
+ }
+ .page.detail-page .watch-surface.portrait-layout .detail-copy{max-width:none;}
+}
+@media(max-width:480px){
+ #hanok-gallery .hanok-grid{gap:10px;}
+ #hanok-gallery .food-card .food-title{font-size:12px;flex-wrap:wrap;padding:9px 8px;}
+ #hanok-gallery .food-card .food-title small{font-size:10px;}
+}
