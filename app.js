@@ -29,7 +29,7 @@ const FILMS=[
  {id:'xuankong',title:'현공사',tag:'AI SHORT FILM',text:'절벽 위 사찰의 건축 구조를 다룬 AI 영상',image:'xuankong_real.webp',target:'works/video/xuankong'},
  {id:'chair',title:'안마의자 홍보영상',tag:'PROMOTIONAL VIDEO',text:'AI 영상 제작 광고 프로젝트',image:'chair_real.webp',target:'works/video/chair'},
  {id:'millennium',title:'밀레니엄 — 또 다른 나',tag:'EXPERIMENTAL FILM',text:'1999.12.31 23:59',image:'millennium_actual.webp',target:'works/video/millennium'},
- {id:'crystal',title:'CRYSTAL BITE ASMR',tag:'ASMR VIDEO',text:'크리스탈의 질감과 소리를 담은 영상',image:'crystal_original.webp',target:'works/video/crystal'},
+ {id:'crystal',title:'CRYSTAL BITE ASMR',tag:'ASMR VIDEO',text:'크리스탈의 질감과 소리를 담은 영상',image:'crystal_real.webp',target:'works/video/crystal'},
  {id:'beyond',title:'BEYOND THE SCREEN',tag:'AI MOVIE TRAILER',text:'현실과 스크린 속 세계의 경계를 넘나드는 영화 예고편',image:'beyond-the-screen.webp',target:'works/video/beyond'}
 ];
 const APPS=[
@@ -127,7 +127,7 @@ function works(){
  const tags=[['all','전체'],['video','AI 영상'],['apps','앱·프로그램'],['web','홈페이지'],['manse','만세력'],['recipe','요리 앱']];
  const chips=`<div class="filter-row" role="group" aria-label="작품 분야 필터">${tags.map(([id,title])=>`<button class="filter-chip ${currentFilter===id?'selected':''}" type="button" data-filter="${id}" aria-pressed="${currentFilter===id}">${esc(title)}</button>`).join('')}</div>`;
  const filtered=currentFilter==='all'?CAT:CAT.filter(x=>x.id===currentFilter);
- return `<div class="page"><header class="stage-heading"><div class="section-overline">03 / WORKS</div><h1>WORKS</h1><p class="lead">작업 분야를 선택하면 해당 분야의 개별 작품을 볼 수 있습니다.</p></header>${inStage(`${chips}<div class="card-grid" id="works-gallery">${filtered.map(x=>card(x,CAT.indexOf(x))).join('')}</div>`,'works')}</div>`;
+ return `<div class="page"><header class="stage-heading"><div class="section-overline">03 / WORKS</div><h1>WORKS</h1><p class="lead">작업 분야를 선택하면 해당 분야의 개별 작품을 볼 수 있습니다.</p></header>${inStage(`${chips}<div class="card-grid" id="works-gallery">${filtered.map(x=>card(x,CAT.indexOf(x),undefined,'category-tone-'+x.id)).join('')}</div>`,'works')}</div>`;
 }
 function categoryPage(id){
  const c=CAT.find(x=>x.id===id);if(!c)return notFound();
@@ -150,7 +150,7 @@ function detailVideo(id){
   beyond:{desc:'한 여성이 오래된 극장에서 스크린 너머의 세계와 마주하며 현실과 환상의 경계가 무너지는 이야기를 담은 AI 영화 예고편입니다.',tag:'AI MOVIE TRAILER',format:'가로형 · 약 22초 · 음악 포함',video:'beyond-the-screen.mp4',poster:'beyond-the-screen.webp',portrait:false}
  }[id];if(!data)return notFound();
  const imageAlt=id==='millennium'?'검은 배경의 MILLENNIUM 1999.12.31 23:59 승인 타이틀':base.title+' 실제 영상 화면';
- const media=data.video?`<div class="watch-player ${data.portrait?'portrait-player':'wide-player'}"><video src="${VID+data.video}" poster="${id==='beyond'?BEYOND_THUMB_FALLBACK:IMG+data.poster}" controls preload="metadata" playsinline aria-label="${esc(base.title)} 영상 재생">브라우저가 HTML5 비디오를 지원하지 않습니다.</video></div>`:`<div class="video-missing">${img(data.poster,imageAlt)}<span>확정된 타이틀 이미지입니다. 밀레니엄 완성 MP4는 현재 이 제작본에 포함되지 않아 재생 연결을 대기하고 있습니다.</span></div>`;
+ const media=data.video?`<div class="watch-player ${data.portrait?'portrait-player':'wide-player'}"><video src="${VID+data.video}" poster="${id==='beyond'?IMG+'beyond-the-screen.webp':IMG+data.poster}" controls preload="metadata" playsinline aria-label="${esc(base.title)} 영상 재생">브라우저가 HTML5 비디오를 지원하지 않습니다.</video></div>`:`<div class="video-missing">${img(data.poster,imageAlt)}<span>확정된 타이틀 이미지입니다. 밀레니엄 완성 MP4는 현재 이 제작본에 포함되지 않아 재생 연결을 대기하고 있습니다.</span></div>`;
  const metadata=`<div class="meta-row"><span class="meta-tag">${esc(data.format)}</span><span class="meta-tag">${esc(data.tag)}</span></div>`;
  if(data.portrait){
   return `<div class="page detail-page project-${esc(id)}">${back('works/video','AI 영상 제작 목록으로 돌아가기')}<header class="detail-top"><div class="section-overline">03 / WORKS · ${esc(data.tag)}</div><h1>${esc(base.title)}</h1></header><div class="watch-surface portrait-layout">${media}<div class="detail-copy"><div class="section-overline">WORK DETAIL</div><h2>${esc(base.title)}</h2><p>${esc(data.desc)}</p>${metadata}<div class="detail-return">${back('works/video','AI 영상 제작 목록으로 돌아가기')}</div></div></div></div>`;

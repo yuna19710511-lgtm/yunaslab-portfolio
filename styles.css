@@ -632,3 +632,147 @@ html.intro-seen .site-intro{display:none}
 
 /* Music remains on its existing monochrome theme and keeps its independent layouts. */
 #app:has(.mr-cat-grid),#app:has(.mr-track-grid),.mr-player-inner{--panel:#1b1d21;--panel2:#202227;--ink:#f5f5f5;--muted:#b6bac1;--line:#5b5e65;--line-soft:#393c42;--accent:#d6d8dc;--accent-2:#888c94}
+
+
+/* ===== 2026-11-27 / YUNASLAB EDITORIAL v5 — SINGLE FINAL OVERRIDE =====
+   Scope: global design + WORKS; .mr-* and music-room files are untouched.
+   All original video, audio, manse, links and image file names remain intact. */
+:root{
+ --bg:#171819;--panel:#242526;--panel2:#303031;
+ --ink:#F4F0EB;--muted:#CCC6C1;--line:#514D4B;--line-soft:#3B3A39;
+ --accent:#F1E9DF;--accent-2:#B9B2AC;--content-width:1550px;
+}
+html,body,.site-frame{background:#171819!important;color:var(--ink)!important;}
+.site-frame{width:100%;max-width:none;margin:0;box-shadow:none;}
+.site-header,.site-footer,#app>.page{max-width:1550px;width:100%;margin-left:auto;margin-right:auto;}
+.site-header,.site-footer{border-color:#42403E;}
+.page{color:var(--ink)}
+.brand,.intro-brand{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:.015em;}
+.home-script-title,.intro-script{
+ font-family:'Caveat','Segoe Print',cursive!important;
+ font-style:normal!important;font-weight:500!important;
+ letter-spacing:.005em!important;color:#F1E9DF!important;
+ text-transform:none!important;line-height:1.05;
+}
+.home-script-title{font-size:clamp(30px,3.6vw,47px);margin:6px 0 12px;}
+.intro-script{font-size:clamp(32px,4vw,53px)}
+body,p,.work-card .body p{color:var(--muted)}
+h1,h2,h3,.page-title,.work-card strong{color:var(--ink)}
+.section-overline,.eyebrow,.text-link,.back-link,.work-card .body small{color:#D9D3CC}
+.primary-button{background:#ECE5DE;color:#1B1B1B;border-color:#ECE5DE;}
+.primary-button:hover{background:#D2CAC1;color:#161616;}
+.secondary-button{background:#272727;color:#F4F0EB;border-color:#77706B;}
+.secondary-button:hover{background:#3C3937;}
+.filter-chip{background:#252526;border-color:#55504C;color:#EAE5DF;}
+.filter-chip.selected,.filter-chip:hover{background:#D5CCC1;color:#171819;border-color:#D5CCC1;}
+.top-nav a.active::after,.flow-rail h2::before{background:#E6DDD3;}
+.flow-dot{background:#171819;}
+.flow-track a.active .flow-dot{background:#CFC7BE;border-color:#EDE7DF;box-shadow:0 0 8px #e1dad022;}
+.cap-card,.info-panel,.tool-group,.app-description{background:#252526;border-color:#4E4945;}
+.tool-tag,.meta-tag{background:#303031;border-color:#57524F;color:#E8E2DC;}
+.watch-surface,.app-preview,.app-description{border-color:#514D4B;}
+/* Home: original approved wave now paints behind the full HOME section.
+   The former boxed/pseudo image is disabled. Fade edges into dark neutral canvas. */
+#app>.page.home-page{position:relative;isolation:isolate;overflow:hidden;}
+#app>.page.home-page::before{
+ content:"";position:absolute;pointer-events:none;z-index:-1;
+ top:0;left:0;right:0;height:min(740px,85vw);
+ background-image:linear-gradient(90deg,#171819 0%,#171819da 24%,#17181944 61%,#17181912 100%),
+ linear-gradient(180deg,#17181900 28%,#17181920 48%,#171819 98%),
+ url('images/home-galaxy-approved.png');
+ background-position:center,center,center 36%;
+ background-repeat:no-repeat;background-size:cover,cover,cover;
+ opacity:.72;
+ -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 68%,transparent 100%);
+ mask-image:linear-gradient(180deg,#000 0%,#000 68%,transparent 100%);
+}
+.home-hero-copy{background:transparent!important;overflow:visible!important;isolation:auto!important;}
+.home-hero-copy::before{content:none!important;display:none!important;}
+.home-featured{position:relative;z-index:0}
+/* WORKS: categorical colors apply ONLY to 5 top-level choices, not HOME or sub-galleries. */
+#works-gallery .work-card{border:1px solid #625C57;background:#282727;}
+#works-gallery .work-card figure{border-bottom:1px solid #ffffff22;}
+#works-gallery .work-card .body{min-height:113px;}
+#works-gallery .work-card.category-tone-video{background:#292727;}
+#works-gallery .work-card.category-tone-apps{background:#47413E;}
+#works-gallery .work-card.category-tone-web{background:#6F6660;}
+#works-gallery .work-card.category-tone-manse{background:#A69B92;color:#211F1E;}
+#works-gallery .work-card.category-tone-recipe{background:#D9D2CA;color:#211F1E;}
+#works-gallery .category-tone-manse .body strong,
+#works-gallery .category-tone-manse .body p,
+#works-gallery .category-tone-manse .body small,
+#works-gallery .category-tone-recipe .body strong,
+#works-gallery .category-tone-recipe .body p,
+#works-gallery .category-tone-recipe .body small{color:#262321!important;}
+#works-gallery .category-tone-manse .round-arrow,
+#works-gallery .category-tone-recipe .round-arrow{border-color:#393531;}
+/* Child gallery resembles a photo exhibition, not category-colored cards. */
+.stage-content .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 28px;}
+.stage-content .gallery-grid .gallery-work-card{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;}
+.stage-content .gallery-grid .gallery-work-card figure{
+ aspect-ratio:16/10;background:#202122;border:0!important;border-radius:3px;overflow:hidden;
+}
+.stage-content .gallery-grid .gallery-work-card figure img{object-fit:contain;object-position:center;}
+.stage-content .gallery-grid .gallery-work-card .body{
+ background:transparent!important;border:0!important;border-bottom:1px solid #514D4B!important;
+ padding:14px 0 18px!important;min-height:0!important;
+}
+.stage-content .gallery-grid .gallery-work-card .number,
+.stage-content .gallery-grid .gallery-work-card .gallery-sequence{display:none!important;}
+.stage-content .gallery-grid .gallery-work-card .gallery-open{background:#191a1acc;border:1px solid #eee2d5;border-radius:3px;}
+.stage-content .gallery-grid .gallery-work-card .body strong{font-size:clamp(18px,1.55vw,23px);}
+/* Existing small photo assets are never enlarged beyond intrinsic pixels on large screens. */
+.stage-content .gallery-grid .gallery-work-card figure img{max-width:100%;}
+/* Details: don't force everything into a 1000px card, use the actual 1550px page width. */
+.page.detail-page{max-width:1550px!important;width:100%!important;margin-inline:auto!important;}
+.page.detail-page .watch-surface.wide{max-width:none!important;width:100%!important;margin:0!important;}
+.page.detail-page .watch-surface.wide .watch-player,
+.page.detail-page .watch-surface.wide .video-missing{max-width:none!important;width:100%!important;margin:0!important;}
+.page.detail-page .watch-surface.portrait-layout{
+ width:100%!important;max-width:none!important;margin:0!important;
+ grid-template-columns:minmax(0,39%) minmax(0,1fr)!important;
+ gap:clamp(28px,4.5vw,70px)!important;align-items:center;
+}
+.page.detail-page .watch-surface.portrait-layout .watch-player.portrait-player{
+ max-width:min(100%,490px)!important;width:100%!important;margin:0!important;
+}
+.page.detail-page .watch-surface.portrait-layout .detail-copy{max-width:none!important;margin:0!important;}
+.page.detail-page .app-detail{width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+/* Hanok banner: clip borders and up to a few baked-in light pixels around source. */
+#hanok-gallery .hanok-banner{border:0!important;outline:0!important;border-radius:5px;overflow:hidden;background:#171819;}
+#hanok-gallery .hanok-banner picture{display:block;overflow:hidden;}
+#hanok-gallery .hanok-banner picture img{display:block;max-width:none;width:calc(100% + 8px)!important;height:auto;margin:-4px -4px!important;object-fit:cover;transform:none!important;}
+/* All ten shorts 9:16; cover makes mixed source aspect ratios fill the card.
+   dakbok source includes baked-in letterbox: slightly zoom it alone. */
+#hanok-gallery .hanok-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 16px;}
+#hanok-gallery .food-card{background:#242526;border:1px solid #514D4B;border-radius:4px;align-self:stretch;}
+#hanok-gallery .food-card .food-visual{aspect-ratio:9/16!important;height:auto!important;max-height:none!important;overflow:hidden;background:#202122;}
+#hanok-gallery .food-card .food-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;}
+#hanok-gallery .food-card .food-title{min-height:50px;align-items:center;}
+#hanok-gallery .food-card[data-food="dakbok"] .food-visual img{transform:scale(1.37);transform-origin:center 56%;object-fit:contain;}
+/* Animated ivory bloom stays fast, readable and respects accessibility. */
+.site-intro{background:#171819;}
+.site-intro::before{background:radial-gradient(circle,#FFF6E9 0%,#E8D5BE90 30%,#E3BFA600 70%);}
+.intro-center{gap:8px;}
+@media(min-width:981px){
+ #app>.page.home-page::before{height:730px;}
+}
+@media(max-width:1100px) and (min-width:721px){
+ #hanok-gallery .hanok-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:720px){
+ #app>.page.home-page::before{height:440px;background-position:center,center,62% center;opacity:.45;}
+ .stage-content .gallery-grid{grid-template-columns:1fr;gap:27px;}
+ #hanok-gallery .hanok-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 11px;}
+ .page.detail-page .watch-surface.portrait-layout{grid-template-columns:1fr!important;}
+ .page.detail-page .watch-surface.portrait-layout .watch-player.portrait-player{max-width:min(100%,420px)!important;margin-inline:auto!important;}
+ .page.detail-page .app-detail{grid-template-columns:1fr;}
+ .home-script-title{font-size:clamp(29px,8.5vw,40px);}
+}
+@media(prefers-reduced-motion:reduce){
+ .site-intro,.site-intro::before,.intro-center{animation:none!important;display:none!important;}
+}
+
+/* Hero artwork extends beyond the 1550px content rail to the actual viewport edges. */
+#app>.page.home-page{overflow:visible!important;}
+#app>.page.home-page::before{left:50%!important;right:auto!important;width:100vw!important;transform:translateX(-50%);}
