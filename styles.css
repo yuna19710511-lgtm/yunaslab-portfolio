@@ -776,3 +776,69 @@ h1,h2,h3,.page-title,.work-card strong{color:var(--ink)}
 /* Hero artwork extends beyond the 1550px content rail to the actual viewport edges. */
 #app>.page.home-page{overflow:visible!important;}
 #app>.page.home-page::before{left:50%!important;right:auto!important;width:100vw!important;transform:translateX(-50%);}
+
+/* ====================================================================
+   PATCH 01 (2026-11-27): KoreanHanokKitchen banner top white edge only.
+   No other cards, layout, media controls or music-room styles changed.
+   The white edge is inside the displayed graphic / along its top rim.
+   Crop only the top 8 CSS pixels instead of zooming the whole banner.
+   ==================================================================== */
+#hanok-gallery .hanok-banner {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  border-radius: 5px;
+}
+@media (min-width: 721px) {
+  #hanok-gallery .hanok-banner {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  #hanok-gallery .hanok-banner picture {
+    display: block;
+    height: auto !important;
+    overflow: hidden;
+  }
+  #hanok-gallery .hanok-banner picture > img {
+    position: relative !important;
+    display: block;
+    top: -8px !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 0 -8px 0 !important;
+    transform: none !important;
+    aspect-ratio: auto !important;
+    object-fit: cover;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+@media (max-width: 720px) {
+  #hanok-gallery .hanok-banner picture {
+    display: block;
+    position: absolute;
+    inset: 0;
+    height: 100% !important;
+    overflow: hidden;
+  }
+  #hanok-gallery .hanok-banner picture > img {
+    display: block;
+    position: absolute !important;
+    top: -8px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% + 8px) !important;
+    margin: 0 !important;
+    transform: none !important;
+    aspect-ratio: auto !important;
+    object-fit: cover;
+    object-position: left center;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 0 !important;
+  }
+}
