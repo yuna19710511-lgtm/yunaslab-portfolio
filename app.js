@@ -25,12 +25,12 @@ const CAT=[
  {id:'recipe',title:'요리 앱',tag:'APP',text:'냉장고 털기 AI',image:'thumbnail_05_recipe.webp'}
 ];
 const FILMS=[
- {id:'hanok',title:'KoreanHanokKitchen',tag:'AI COOKING VIDEO',text:'한옥의 분위기와 한국 요리 이야기',image:'thumbnail_01_hanok_edited.webp',target:'works/video/hanok'},
+ {id:'hanok',title:'KoreanHanokKitchen',tag:'AI COOKING VIDEO',text:'한옥의 분위기와 한국 요리 이야기',image:'hanok_thumb_longform_1456.webp',target:'works/video/hanok'},
  {id:'xuankong',title:'현공사',tag:'AI SHORT FILM',text:'절벽 위 사찰의 건축 구조를 다룬 AI 영상',image:'xuankong_real.webp',target:'works/video/xuankong'},
- {id:'chair',title:'안마의자 홍보영상',tag:'PROMOTIONAL VIDEO',text:'AI 영상 제작 광고 프로젝트',image:'chair_real.webp',target:'works/video/chair'},
+ {id:'chair',title:'안마의자 홍보영상',tag:'PROMOTIONAL VIDEO',text:'AI 영상 제작 광고 프로젝트',image:'chair_triptych.webp',target:'works/video/chair'},
  {id:'millennium',title:'밀레니엄 — 또 다른 나',tag:'EXPERIMENTAL FILM',text:'1999.12.31 23:59',image:'millennium_actual.webp',target:'works/video/millennium'},
- {id:'crystal',title:'CRYSTAL BITE ASMR',tag:'ASMR VIDEO',text:'크리스탈의 질감과 소리를 담은 영상',image:'crystal_real.webp',target:'works/video/crystal'},
- {id:'beyond',title:'BEYOND THE SCREEN',tag:'AI MOVIE TRAILER',text:'현실과 스크린 속 세계의 경계를 넘나드는 영화 예고편',image:'beyond-the-screen.webp',target:'works/video/beyond'}
+ {id:'crystal',title:'CRYSTAL BITE ASMR',tag:'ASMR VIDEO',text:'크리스탈의 질감과 소리를 담은 영상',image:'crystal_triptych.webp',target:'works/video/crystal'},
+ {id:'beyond',title:'BEYOND THE SCREEN',tag:'AI MOVIE TRAILER',text:'현실과 스크린 속 세계의 경계를 넘나드는 영화 예고편',image:'./beyond-the-screen.webp',target:'works/video/beyond'}
 ];
 const APPS=[
  {id:'cutting',title:'AI 재단노트',tag:'CUTTING / WORKFLOW',text:'재단 계획을 정리하는 작업용 도구',image:'thumbnail_02_cutting_original.webp',preview:'cutting.webp',desc:'판재 규격과 재단 조건을 반영해 계획을 정리하는 프로젝트입니다.',url:external.cutting},
@@ -41,9 +41,9 @@ const APPS=[
  {id:'door',title:'문틀·도어 계산기',tag:'UTILITY / CALCULATOR',text:'문틀과 도어 규격 계산',image:'app_door.webp',preview:'app_door.webp',desc:'문틀 외경과 도어 크기 등 현장 계산을 도울 수 있도록 기획한 도구입니다.',url:external.door}
 ];
 const FOODS=[
- {id:'gimbap',title:'김밥'}, {id:'dakbok',title:'닭볶음탕'}, {id:'bibimbap',title:'돌솥비빔밥'},
+ {id:'gimbap',title:'김밥'}, {id:'dakbok',title:'닭볶음탕',thumb:'food_dakbok_eating.webp'}, {id:'bibimbap',title:'돌솥비빔밥'},
  {id:'tteok',title:'떡볶이'}, {id:'omelet',title:'불닭오믈렛'}, {id:'japchae',title:'잡채'},
- {id:'pajeon',title:'파전'}, {id:'galbijjim',title:'갈비찜'}, {id:'gamjatang',title:'감자탕'}, {id:'sujebi',title:'수제비'}
+ {id:'pajeon',title:'파전'}, {id:'galbijjim',title:'갈비찜'}, {id:'gamjatang',title:'감자탕'}, {id:'sujebi',title:'수제비',thumb:'food_sujebi_video.webp'}
 ];
 const CAPABILITIES=[
  ['AI 콘텐츠 제작','이미지와 영상 등 창작 콘텐츠를 기획하고 제작합니다.'],
@@ -92,7 +92,7 @@ const menuButton=document.getElementById('mobile-menu-button');
 let currentFilter='all';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const route=path=>'#/'+path;
-const img=(name,alt,more='')=>`<img src="${IMG+encodeURIComponent(name)}" alt="${esc(alt)}" loading="eager" ${name==='beyond-the-screen.webp'?`onerror="this.onerror=null;this.src=BEYOND_THUMB_FALLBACK"`: ''} ${more}>`;
+const img=(name,alt,more='')=>`<img src="${name.startsWith('./')?name:IMG+encodeURIComponent(name)}" alt="${esc(alt)}" loading="eager" ${name.endsWith('beyond-the-screen.webp')?`onerror="this.onerror=null;this.src=BEYOND_THUMB_FALLBACK"`: ''} ${more}>`;
 const ext=(url,text,klass='primary-button')=>`<a class="${klass}" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(text)} ↗</a>`;
 const back=(path,label)=>`<a class="back-link" href="${route(path)}">← ${esc(label)}</a>`;
 function navActive(){
@@ -123,11 +123,16 @@ function about(){
  return `<div class="page"><div class="about-banner"><div class="section-overline">02 / ABOUT</div><h1 class="page-title">아이디어를 현실로,<br>배움을 결과물로.</h1><div class="about-name">손유나 · Sohn Yuna</div><p class="about-intro">AI와 디지털 도구를 배우고, 기획한 것을 직접 만들며, 실제로 활용할 수 있는 결과물로 연결합니다.<span class="about-break">영상 콘텐츠부터 웹서비스와 업무 도구까지 다양한 형태의 작업을 이어가고 있습니다.</span></p></div>
  ${inStage(`<div class="cap-grid">${CAPABILITIES.map(([title,text],i)=>`<article class="cap-card"><span class="cap-number">0${i+1} / CAPABILITY</span><h3>${esc(title)}</h3><p>${esc(text)}</p></article>`).join('')}</div><div class="about-notes"><div><h3>LEARNING</h3><p>세종사이버대학교 AI 실무활용학과에서 공부하며,<span class="about-break">다양한 프로젝트로 학습 내용을 적용하고 있습니다.</span></p></div><div><h3>BACKGROUND</h3><p>동국대학교 졸업<span class="about-break">새로운 도구를 배워 실제 작업에 활용하는 과정을 이어가고 있습니다.</span></p></div></div>`,'about')}</div>`;
 }
+/* WORKS 상위 카테고리: 이미지 없는 컬러 블록 카드 (HOME 대표 카드는 card() 그대로) */
+function categoryCard(item,i){
+ const href=route(item.id==='manse'?'works/manse/app':item.id==='recipe'?'works/recipe/app':'works/'+item.id);
+ return `<a class="work-card category-block category-tone-${item.id}" href="${href}" aria-label="${esc(item.title)} 보기"><div class="body"><div><small>${esc(item.tag||'PROJECT')}</small><strong>${esc(item.title)}</strong><p>${esc(item.text||'')}</p></div><span class="round-arrow" aria-hidden="true">→</span></div><span class="blk-no" aria-hidden="true">${String(i+1).padStart(2,'0')}</span></a>`;
+}
 function works(){
  const tags=[['all','전체'],['video','AI 영상'],['apps','앱·프로그램'],['web','홈페이지'],['manse','만세력'],['recipe','요리 앱']];
  const chips=`<div class="filter-row" role="group" aria-label="작품 분야 필터">${tags.map(([id,title])=>`<button class="filter-chip ${currentFilter===id?'selected':''}" type="button" data-filter="${id}" aria-pressed="${currentFilter===id}">${esc(title)}</button>`).join('')}</div>`;
  const filtered=currentFilter==='all'?CAT:CAT.filter(x=>x.id===currentFilter);
- return `<div class="page"><header class="stage-heading"><div class="section-overline">03 / WORKS</div><h1>WORKS</h1><p class="lead">작업 분야를 선택하면 해당 분야의 개별 작품을 볼 수 있습니다.</p></header>${inStage(`${chips}<div class="card-grid" id="works-gallery">${filtered.map(x=>card(x,CAT.indexOf(x),undefined,'category-tone-'+x.id)).join('')}</div>`,'works')}</div>`;
+ return `<div class="page"><header class="stage-heading"><div class="section-overline">03 / WORKS</div><h1>WORKS</h1><p class="lead">작업 분야를 선택하면 해당 분야의 개별 작품을 볼 수 있습니다.</p></header>${inStage(`${chips}<div class="card-grid" id="works-gallery">${filtered.map(x=>categoryCard(x,CAT.indexOf(x))).join('')}</div>`,'works')}</div>`;
 }
 function categoryPage(id){
  const c=CAT.find(x=>x.id===id);if(!c)return notFound();
@@ -144,24 +149,24 @@ function detailVideo(id){
  const base=FILMS.find(x=>x.id===id);if(!base || id==='hanok')return notFound();
  const data={
   xuankong:{desc:'절벽에 매달린 중국 현공사의 독특한 구조와 하중 전달 원리를 AI 영상으로 재구성한 작품입니다.',tag:'AI SHORT FILM',format:'가로형 · 30초 · 한국어 자막·오디오 포함',video:'xuankong.mp4',poster:'xuankong_real.webp',portrait:false},
-  chair:{desc:'안마의자를 중심으로 편안한 휴식의 분위기를 영상으로 구성한 광고 제작 프로젝트입니다.',tag:'AI PROMO FILM',format:'세로형 · 약 51초 · 브랜드 엔딩 포함',video:'chair.mp4',poster:'chair_real.webp',portrait:true},
+  chair:{desc:'안마의자를 중심으로 편안한 휴식의 분위기를 영상으로 구성한 광고 제작 프로젝트입니다.',tag:'AI PROMO FILM',format:'세로형 · 약 51초 · 브랜드 엔딩 포함',video:'chair.mp4',poster:'chair_real.webp',portrait:true,scenes:'chair_triptych.webp'},
   millennium:{desc:'1999년 12월 31일, 새천년의 문턱에서 마주한 또 다른 나의 이야기.',tag:'EXPERIMENTAL FILM',format:'가로형 · 46초 · 원본 영상 및 음성',video:'videos/millennium.mp4',poster:'millennium_actual.webp',portrait:false},
-  crystal:{desc:'투명한 크리스탈의 질감과 소리를 담은 감각적인 AI ASMR 영상입니다.',tag:'AI ASMR FILM',format:'세로형 · ASMR',video:'crystal.mp4',poster:'crystal_real.webp',portrait:true},
+  crystal:{desc:'투명한 크리스탈의 질감과 소리를 담은 감각적인 AI ASMR 영상입니다.',tag:'AI ASMR FILM',format:'세로형 · ASMR',video:'crystal.mp4',poster:'crystal_real.webp',portrait:true,scenes:'crystal_triptych.webp'},
   beyond:{desc:'한 여성이 오래된 극장에서 스크린 너머의 세계와 마주하며 현실과 환상의 경계가 무너지는 이야기를 담은 AI 영화 예고편입니다.',tag:'AI MOVIE TRAILER',format:'가로형 · 약 22초 · 음악 포함',video:'beyond-the-screen.mp4',poster:'beyond-the-screen.webp',portrait:false}
  }[id];if(!data)return notFound();
  const imageAlt=id==='millennium'?'검은 배경의 MILLENNIUM 1999.12.31 23:59 승인 타이틀':base.title+' 실제 영상 화면';
- const media=data.video?`<div class="watch-player ${data.portrait?'portrait-player':'wide-player'}"><video src="${VID+data.video}" poster="${id==='beyond'?IMG+'beyond-the-screen.webp':IMG+data.poster}" controls preload="metadata" playsinline aria-label="${esc(base.title)} 영상 재생">브라우저가 HTML5 비디오를 지원하지 않습니다.</video></div>`:`<div class="video-missing">${img(data.poster,imageAlt)}<span>확정된 타이틀 이미지입니다. 밀레니엄 완성 MP4는 현재 이 제작본에 포함되지 않아 재생 연결을 대기하고 있습니다.</span></div>`;
+ const media=data.video?`<div class="watch-player ${data.portrait?'portrait-player':'wide-player'}"><video src="${VID+data.video}" poster="${id==='beyond'?'beyond-the-screen.webp':IMG+data.poster}" controls preload="metadata" playsinline aria-label="${esc(base.title)} 영상 재생">브라우저가 HTML5 비디오를 지원하지 않습니다.</video></div>`:`<div class="video-missing">${img(data.poster,imageAlt)}<span>확정된 타이틀 이미지입니다. 밀레니엄 완성 MP4는 현재 이 제작본에 포함되지 않아 재생 연결을 대기하고 있습니다.</span></div>`;
  const metadata=`<div class="meta-row"><span class="meta-tag">${esc(data.format)}</span><span class="meta-tag">${esc(data.tag)}</span></div>`;
  if(data.portrait){
-  return `<div class="page detail-page project-${esc(id)}">${back('works/video','AI 영상 제작 목록으로 돌아가기')}<header class="detail-top"><div class="section-overline">03 / WORKS · ${esc(data.tag)}</div><h1>${esc(base.title)}</h1></header><div class="watch-surface portrait-layout">${media}<div class="detail-copy"><div class="section-overline">WORK DETAIL</div><h2>${esc(base.title)}</h2><p>${esc(data.desc)}</p>${metadata}<div class="detail-return">${back('works/video','AI 영상 제작 목록으로 돌아가기')}</div></div></div></div>`;
+  return `<div class="page detail-page project-${esc(id)}">${back('works/video','AI 영상 제작 목록으로 돌아가기')}<header class="detail-top"><div class="section-overline">03 / WORKS · ${esc(data.tag)}</div><h1>${esc(base.title)}</h1></header><div class="watch-surface portrait-layout">${media}<div class="detail-copy"><div class="section-overline">WORK DETAIL</div><h2>${esc(base.title)}</h2><p>${esc(data.desc)}</p>${metadata}${data.scenes?`<figure class="scene-strip"><figcaption>영상 속 장면</figcaption>${img(data.scenes,base.title+' 영상 속 장면 3컷')}</figure>`:''}<div class="detail-return">${back('works/video','AI 영상 제작 목록으로 돌아가기')}</div></div></div></div>`;
  }
  return `<div class="page detail-page wide-detail-page">${back('works/video','AI 영상 제작 목록으로 돌아가기')}<header class="detail-top"><div class="section-overline">03 / WORKS · ${esc(data.tag)}</div><h1>${esc(base.title)}</h1><p>${esc(data.desc)}</p></header><div class="watch-surface wide">${media}<div class="detail-copy"><div class="section-overline">${esc(data.tag)}</div><h2>${esc(base.title)}</h2>${metadata}</div></div><div class="detail-return">${back('works/video','AI 영상 제작 목록으로 돌아가기')}</div></div>`;
 }
 function hanok(){
  return `<div class="page detail-page" id="hanok-gallery">${back('works/video','AI 영상 제작 목록으로 돌아가기')}
-  <div class="hanok-banner"><picture><source media="(max-width:720px)" srcset="${IMG}hanok_actual_banner_mobile.webp">${img('hanok_actual_banner.webp','실제 KoreanHanokKitchen 유튜브 채널 배너')}</picture><span class="hanok-mobile-title">KoreanHanokKitchen</span><a class="channel-button" href="${external.hanok}" target="_blank" rel="noopener noreferrer" aria-label="유튜브 KoreanHanokKitchen 채널 열기">YouTube 채널 바로가기 ↗</a></div>
+  <div class="hanok-banner"><picture><source media="(max-width:720px)" srcset="${IMG}hanok_banner_mobile_clean.webp">${img('hanok_banner_clean.webp','실제 KoreanHanokKitchen 유튜브 채널 배너','width="1672" height="256"')}</picture><span class="hanok-mobile-title">KoreanHanokKitchen</span><a class="channel-button" href="${external.hanok}" target="_blank" rel="noopener noreferrer" aria-label="유튜브 KoreanHanokKitchen 채널 열기">YouTube 채널 바로가기 ↗</a></div>
   <header class="hanok-intro"><div><div class="section-overline">AI COOKING FILM COLLECTION</div><h1>KoreanHanokKitchen</h1><p>한옥 부엌의 풍경과 요리 이야기 · 총 ${FOODS.length}편</p></div><span class="eyebrow">ORIGINAL VIDEO COLLECTION</span></header>
-  <div class="hanok-grid">${FOODS.map((f,i)=>`<button type="button" class="food-card" data-food="${f.id}" aria-label="${esc(f.title)} 영상 재생"><div class="food-visual">${img('food_'+f.id+'.webp',f.title+' 실제 영상의 음식 또는 인물 장면')}<span class="play-pill" aria-hidden="true">▶</span></div><div class="food-title"><span>${String(i+1).padStart(2,'0')}. ${esc(f.title)}</span><small>재생하기 →</small></div></button>`).join('')}</div>
+  <div class="hanok-grid">${FOODS.map((f,i)=>`<button type="button" class="food-card" data-food="${f.id}" aria-label="${esc(f.title)} 영상 재생"><div class="food-visual">${img(f.thumb||'food_'+f.id+'.webp',f.title+' 실제 영상의 음식 또는 인물 장면')}<span class="play-pill" aria-hidden="true">▶</span></div><div class="food-title"><span>${String(i+1).padStart(2,'0')}. ${esc(f.title)}</span><small>재생하기 →</small></div></button>`).join('')}</div>
   <div class="detail-return">${back('works/video','AI 영상 제작 목록으로 돌아가기')}</div></div>`;
 }
 function appDetail(kind,id){
@@ -209,7 +214,7 @@ function openFood(id){
  const food=FOODS.find(f=>f.id===id);if(!food)return;
  dialogTitle.textContent=food.title+' · KoreanHanokKitchen';
  dialogVideo.src=VID+food.id+'.mp4';
- dialogVideo.poster=IMG+'food_'+food.id+'.webp';
+ dialogVideo.poster=IMG+(food.thumb||'food_'+food.id+'.webp');
  dialog.showModal();
  dialogVideo.play().catch(()=>{/* user can press native play */});
 }
